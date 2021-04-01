@@ -1,7 +1,11 @@
+// This file is a draft.
+
+
 
 class FeatureLuhnAlgorithm {
     public static void main (String[] args){ // NOT MAIN
-        public static String cardNum = "5500 0000 0000 0004";
+        String cardNum = "5500 0000 0000 0004";
+        boolean validCardNum = validateCreditCard(cardNum);
 
         if (validCardNum){
             System.out.println("This card is valid.");
@@ -39,6 +43,7 @@ class FeatureLuhnAlgorithm {
     public static boolean correctInputCard(String cardInput){
         try{
             double inputCorrect = Double.parseDouble(cardInput)/2; // Converting the String into a double
+            System.out.println(inputCorrect); // To ignore the error message
             return true; // True returned because the user has inputted numbers (A calculation is able to occur)
         }
         catch (Exception e){
