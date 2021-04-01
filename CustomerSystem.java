@@ -17,6 +17,14 @@ class CustomerSystem{
         exitCondition = "9";
 
         // More variables for the main may be declared in the space below
+        String firstName;
+        String lastName;
+        String city;
+        String postalCode;
+        int cardNum;
+        boolean validPostalCode;
+        boolean validCardNum;
+        //boolean validName;
 
 
         do{
