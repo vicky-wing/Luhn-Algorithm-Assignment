@@ -1,10 +1,7 @@
 
 class FeatureLuhnAlgorithm {
-    public static void main (String[] args){
-        String cardNum = "5500 0000 0000 0004";
-        boolean validCardNum = validateCreditCard(cardNum);
-
-        correctInputCard(cardNum);
+    public static void main (String[] args){ // NOT MAIN
+        public static String cardNum = "5500 0000 0000 0004";
 
         if (validCardNum){
             System.out.println("This card is valid.");
@@ -13,23 +10,39 @@ class FeatureLuhnAlgorithm {
             System.out.println("This card is invalid.");
         }
     }
+
     /*
      * This method ensures that the inputted 16-digit credit/debit card number is legitimate.
      * 
      * @param String num - This is the 16-digit number inputted by the user
-     * @return 
+     * @return boolean that indicates if the user has inputted a valid card or not
      */
     public static boolean validateCreditCard(String num){
         num = num.replaceAll(" ", ""); // Removes spaces in the card number
-        if ((Double.parseDouble(num))/2 > 0){
+
+        boolean correctInputCard = correctInputCard(num);
+
+        if (correctInputCard){
             return true;
         }
         else{
-            return false;
-        }
+            return false; // False returned because the card does not pass the Luhn algorithm
+        }   
     }
 
-    public static void correctInputCard(String num){
-        
+    /*
+     * Ensures that only numbers were inputted for the 16-digit credit/debit card.
+     * 
+     * @param - 
+     * @return - 
+     */
+    public static boolean correctInputCard(String cardInput){
+        try{
+            double inputCorrect = Double.parseDouble(cardInput)/2; // Converting the String into a double
+            return true; // True returned because the user has inputted numbers (A calculation is able to occur)
+        }
+        catch (Exception e){
+            return false; // False returned because the user inputted other types of characteres (A calculation cannot occur)
+        }
     }
 }
