@@ -5,7 +5,6 @@
 
 import java.util.Scanner;
 // More packages may be imported in the space below
-import java.util.Random;
 
 class CustomerSystem{
     public static void main(String[] args){
@@ -17,15 +16,6 @@ class CustomerSystem{
         exitCondition = "9";
 
         // More variables for the main may be declared in the space below
-        String firstName;
-        String lastName;
-        String city;
-        String postalCode;
-        int cardNum;
-        boolean validPostalCode;
-        boolean validCardNum;
-        //boolean validName;
-
 
         do{
             printMenu();                                    // Printing out the main menu
@@ -34,7 +24,7 @@ class CustomerSystem{
             if (userInput.equals(enterCustomerOption)){
                 // Only the line below may be editted based on the parameter list and how you design the method return
 		        // Any necessary variables may be added to this if section, but nowhere else in the code
-                enterCustomerInfo();
+                enterCustomerInfo(reader); // Scanner reader gets sent to method enterCustomerInfo()
             }
             else if (userInput.equals(generateCustomerOption)) {
                 // Only the line below may be editted based on the parameter list and how you design the method return
@@ -49,6 +39,7 @@ class CustomerSystem{
         reader.close();
         System.out.println("Program Terminated");
     }
+
     public static void printMenu(){
         System.out.println("Customer and Sales System\n"
         .concat("1. Enter Customer Information\n")
@@ -59,13 +50,42 @@ class CustomerSystem{
         .concat("Enter menu option (1-9)\n")
         );
     }
+
     /*
-    * This method may be edited to achieve the task however you like.
-    * The method may not nesessarily be a void return type
-    * This method may also be broken down further depending on your algorithm
+     * Users will enter their personal information here.
+     * 
+     * @param
     */
-    public static void enterCustomerInfo() {
+    public static void enterCustomerInfo(Scanner reader) { 
+
+        System.out.println("Enter your information below.");
+        System.out.println("First name:");
+        String firstName = validateString(reader.nextLine());
+
+        System.out.println("Last name:");
+        String lastName = validateString(reader.nextLine());
+
+        System.out.println("City:");
+        String city = validateString(reader.nextLine());
+
+        System.out.println("Postal code:");
+        String postalCode = generateCustomerDataFile(reader.nextLine());
+
+        System.out.println("Credit card number:");
+        String cardNum = generateCustomerDataFile(reader.nextLine());
+
+        System.out.println("Returned to main menu.");
+
     }
+
+    /*
+     * (Description)
+     * 
+     * @param
+    */
+    public static void validateString(String firstName, String lastName, String city) { 
+    }
+
     /*
     * This method may be edited to achieve the task however you like.
     * The method may not nesessarily be a void return type
@@ -73,6 +93,7 @@ class CustomerSystem{
     */
     public static void validatePostalCode(){
     }
+
     /*
     * This method may be edited to achieve the task however you like.
     * The method may not nesessarily be a void return type
@@ -80,6 +101,7 @@ class CustomerSystem{
     */
     public static void validateCreditCard(){
     }
+
     /*
     * This method may be edited to achieve the task however you like.
     * The method may not nesessarily be a void return type
@@ -87,6 +109,7 @@ class CustomerSystem{
     */
     public static void generateCustomerDataFile(){
     }
+
     /*******************************************************************
     *       ADDITIONAL METHODS MAY BE ADDED BELOW IF NECESSARY         *
     *******************************************************************/
