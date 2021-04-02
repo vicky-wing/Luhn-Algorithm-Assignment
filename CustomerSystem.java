@@ -60,21 +60,26 @@ class CustomerSystem{
 
         System.out.println("Enter your information below.");
         System.out.println("First name:");
-        String firstName = validateString(reader.nextLine());
+        String firstName = reader.nextLine();
 
         System.out.println("Last name:");
-        String lastName = validateString(reader.nextLine());
+        String lastName = reader.nextLine();
 
         System.out.println("City:");
-        String city = validateString(reader.nextLine());
+        String city = reader.nextLine();
 
         System.out.println("Postal code:");
-        String postalCode = generateCustomerDataFile(reader.nextLine());
+        String postalCode = reader.nextLine();
 
         System.out.println("Credit card number:");
-        String cardNum = generateCustomerDataFile(reader.nextLine());
+        String cardNum = reader.nextLine();
 
-        System.out.println("Returned to main menu.");
+        System.out.println("Returning to main menu.");
+        System.out.println("----------------");
+
+        validateStringEntry(firstName, lastName, city);
+        validatePostalCode(postalCode);
+        validateCreditCard(cardNum);
 
     }
 
@@ -83,7 +88,9 @@ class CustomerSystem{
      * 
      * @param
     */
-    public static void validateString(String firstName, String lastName, String city) { 
+    public static void validateStringEntry(String firstName, String lastName, String city) { 
+        // Checking if only characters were entered
+        
     }
 
     /*
@@ -91,7 +98,7 @@ class CustomerSystem{
     * The method may not nesessarily be a void return type
     * This method may also be broken down further depending on your algorithm
     */
-    public static void validatePostalCode(){
+    public static void validatePostalCode(String postalCode){
     }
 
     /*
@@ -99,7 +106,7 @@ class CustomerSystem{
     * The method may not nesessarily be a void return type
     * This method may also be broken down further depending on your algorithm
     */
-    public static void validateCreditCard(){
+    public static void validateCreditCard(String creditCard){
     }
 
     /*
