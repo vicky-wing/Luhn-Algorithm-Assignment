@@ -24,16 +24,16 @@ class FeatureStringChecker {
         int length = input.length();
 
         for (int i = 0; i < 26; i++){
-            String letter = alphabet.substring(i,i+1);
-            String letter2 = alphabet2.substring(i,i+1);
+            String letterCheck = alphabet.substring(i,i+1);
+            String letterCheck2 = alphabet2.substring(i,i+1);
            
             for (int j = 0; j < length; j++){
-                String character = input.substring(j, j+1);
+                String characterInput = input.substring(j, j+1);
 
-                if (character.equals(letter)){
+                if (characterInput.equals(letterCheck)){
                     counter++;
                 }
-                if (character.equals(letter2)){
+                if (characterInput.equals(letterCheck2)){
                     counter++;
                 }
             }
