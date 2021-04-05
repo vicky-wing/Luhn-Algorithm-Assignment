@@ -32,6 +32,9 @@ class FeatureCardValidation {
         }
     }
 
+    /*
+     * Ensures that only numbers were entered
+     */
     public static boolean checkNumsOnly(String input){
         String numbers = "0123456789";
         int length = input.length();
@@ -62,6 +65,9 @@ class FeatureCardValidation {
         }
     }
 
+    /*
+     * Luhn Algorithm - base/main
+     */
     public static boolean luhnAlgorithm (String cardNum){
         String reverse = reverseOrder(cardNum);
         int sum1 = algorithm1(reverse);
@@ -78,6 +84,9 @@ class FeatureCardValidation {
         }
     }
    
+    /*
+     * Reverses the card number order
+     */
     public static String reverseOrder (String entry){
         int length = entry.length(); // 11
         String reverse = "";
@@ -93,6 +102,9 @@ class FeatureCardValidation {
         return reverse;
     }
 
+    /*
+     * Takes the sum of all the digits in the odd position numbers and returns it to algorithm main/base
+     */
     public static int algorithm1 (String num){
         int length = num.length(); // 11
         int sum = 0;
@@ -106,6 +118,13 @@ class FeatureCardValidation {
         return sum; // 42
     }
 
+    /*
+     * Takes the digits from the even position numbers and multiply those values by 2
+     * If the product is or exceeds 10, the diits in the ones and tens place will be added together
+     * (ex. 10 --> 1 + 0 = 1)
+     * If the product is 9 or below, nothing happens to the digit
+     * Then, all the digits gets sumed to be returned
+     */
     public static int algorithm2 (String num){
         int length = num.length();
         char character;
@@ -113,7 +132,6 @@ class FeatureCardValidation {
         int digit;
         String twoDigits = "";
         
-
         for (int i = 1; i < length; i+=2){
             character = num.charAt(i);
             digit = Character.getNumericValue(character); // Converts char (character) to int (digit)
@@ -136,12 +154,16 @@ class FeatureCardValidation {
         return sum; // 28
     }
 
+    /*
+     * Takes the grand sum of sum1 and sum2.
+     * If there is a 0 in the ones palce, method returns true. 
+     */
     public static boolean algorithm3 (int grandSum){
         String number1 = Integer.toString(grandSum); // Converts int (num) to string (number)
         int length = number1.length();
 
-        char character = number1.charAt(length-1);
-        String number2 = Character.toString(character);
+        char character = number1.charAt(length-1); // Takes the last character in the string
+        String number2 = Character.toString(character); // Converts char (character) to string (number2)
 
         if (number2.equals("0")){
             return true;

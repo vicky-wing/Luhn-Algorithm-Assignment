@@ -57,7 +57,7 @@ class CustomerSystem{
      * @author - Carl Wang
      * User will enter their personal information here.
      * 
-     * @param reader - Scanner from main.
+     * @param Scanner reader - Scanner from main.
      * May need to switch into a return string?
     */
     public static void enterCustomerInfo(Scanner reader) { 
@@ -90,7 +90,8 @@ class CustomerSystem{
 
         // Ensures that postal code and card number are valid
         validatePostalCode(postalCode);
-        validateCreditCard(cardNum);
+        //postalCode = validatePostalCode(postalCode); --> I think you might want this line instead once you start working on export file
+        cardNum = validateCreditCard(cardNum);
 
         // Prints the entered information
         System.out.println("Returning to main menu.");
@@ -115,11 +116,26 @@ class CustomerSystem{
     }
 
     /*
-    * This method may be edited to achieve the task however you like.
-    * The method may not nesessarily be a void return type
-    * This method may also be broken down further depending on your algorithm
-    */
-    public static void validateCreditCard(String x){
+     * @author - Carl Wang
+     * Ensures that the credit/debit card input number is valid by ensuring that it
+     * contains 9 or more digits, and passes Luhn's Algorithm
+     * 
+     * @param String cardNum - The user's credit/debit card number
+     * @return String - Returns a String that is cardNum untouched,
+     *                  or INVALID ENTRY, PLEASE TRY AGAIN
+     */
+    public static String validateCreditCard(String cardNum){
+        String stringCardInput = cardNum.replaceAll(" ", ""); // Removes spaces in the card number
+
+        boolean numbersOnly = checkNumsOnly(stringCardInput); // Checks if String only contains numbers and has 9+ characters
+        boolean luhnAlgorithm = luhnAlgorithm(stringCardInput); // Checks if cardNum passes Luhn's Algorithm
+
+        if (numbersOnly && luhnAlgorithm){ 
+            return cardNum; // cardNum returned because String only contains numbers, and passes Luhn's Algorithm
+        }
+        else{
+            return "INVALID ENTRY, PLEASE TRY AGAIN"; // (Message) returned because String fails requirements
+        }
     }
 
     /*
@@ -139,7 +155,7 @@ class CustomerSystem{
      * Adjusts the capitalization of the following strings: firstName, lastName and city
      * to follow adaquate capitalization.
      * 
-     * @param input - A string that should only consist of alphabet-characters
+     * @param String input - A string that should only consist of alphabet-characters
      * @return String firstChar + restChar - String that contains proper capitalization
      *                                       of first name/last name/city name
     */
@@ -160,7 +176,7 @@ class CustomerSystem{
      * Checks the strings: firstName, lastName and city to verify if only alphabet characters
      * were used during input.
      * 
-     * @param input - A string that should only consistent of alphabet-characters
+     * @param String input - A string that should only consist of alphabet-characters
      * @return (String) - returns parameter as a String untouched, or a sentence indicating input error 
      *                    (user inputted a non-alphabet character).
     */
@@ -194,6 +210,173 @@ class CustomerSystem{
         }
         else {
             return "INVALID ENTRY, PLEASE TRY AGAIN";
+        }
+    }
+
+    /*
+     * @author - Carl Wang
+     * Ensures that string only contains numbers
+     * 
+     * @param String input - A string that contains the user's credit/debit card number
+     * @return boolean - Returns true if the String only contains digits
+     *                   Returns false if the String a or many non-digit character(s)
+     */
+    public static boolean checkNumsOnly(String input){
+        String numbers = "0123456789";
+        int length = input.length();
+        int counter = 0;
+
+        if (length >= 9){ // Ensures that the number of characters is 9 or greater
+            for (int i = 0; i < 10; i++){
+                String numCheck = numbers.substring(i,i+1); // Takes the number located at index i from String numbers
+                
+                for (int j = 0; j < length; j++){
+                    String inputDigits = input.substring(j, j+1); // Takes the number located at index j from parameter
+    
+                    if (inputDigits.equals(numCheck)){ // If the Strings match, add 1 to counter.
+                        counter++;
+                    }
+                }
+            }
+    
+            if (counter == length){
+                return true; // String only contains numbers
+            }
+            else{
+                return false; // String contains non-numeric characters
+            }
+        }
+        else{
+            return false; // False returned because card has less than 9 digits
+        }
+    }
+
+    /*
+     * @author - Carl Wang
+     * Luhn Algorithm - base/main
+     * 
+     * @param String cardNum - The user's entered card number, a String that only contains digits
+     */
+    public static boolean luhnAlgorithm (String cardNum){
+        String reverse = reverseOrder(cardNum); // Sends cardNum to method to have it's order reversed
+        int sum1 = algorithm1(reverse); // Sends the reversed cardNum to check the odd-positioned digits and returns a sum
+        int sum2 = algorithm2(reverse); // Sends the reversed cardNum to check the even-positioned digits and returns another sum
+        int grandSum = sum1 + sum2; // Adds up the two sums 
+
+        boolean pass = algorithm3(grandSum); // If the ones place contains a 0, then the card number passes Luhn's Algorithm
+
+        if (pass){
+            return true; // Card pass Luhn's Algorithm
+        }
+        else{
+            return false; // Card fails Luhn's Algorithm
+        }
+    }
+
+    /*
+     * @author - Carl Wang
+     * Reverses the card number order
+     * 
+     * @param String entry - The user's credit/debt card number
+     * @return String reverse - A string that is the card number's digits but reversed in position.
+     */
+    public static String reverseOrder (String entry){
+        int length = entry.length(); 
+        String reverse = "";
+        char character;
+        String add;
+
+        for (int i = length-1; i >= 0; i--){ // Builds a String that will contain the reversed card number
+            character = entry.charAt(i);
+            add = Character.toString(character);
+            reverse = reverse.concat(add);
+        }
+
+        return reverse; 
+    }
+
+    /*
+     * @author - Carl Wang
+     * Takes the sum of all the digits in the odd position numbers and returns it to algorithm main/base
+     * 
+     * @param String num - The reversed card number
+     * @return int sum - Integer that is the sum of the odd-positioned numbers
+     */
+    public static int algorithm1 (String num){
+        int length = num.length(); 
+        int sum = 0;
+        char character;
+
+        for (int i = 0; i < length; i+=2){ // Loop that identifies the odd positioned digits
+            character = num.charAt(i);
+            sum += Character.getNumericValue(character); // Converts char (character) to int, and adds it to sum
+        }
+        
+        return sum;
+    }
+
+    /*
+     * @author - Carl Wang
+     * Takes the digits from the even position numbers and multiply those values by 2
+     * If the product is or exceeds 10, the digits in the ones and tens place will be added together
+     * (ex. 10 --> 1 + 0 = 1)
+     * If the product is 9 or below, nothing happens to the digit
+     * Then, all the digits gets sumed and then returned
+     * 
+     * @param String num - The reversed credit/debit card number
+     * @return int sum - The sum of even positioned digits after specific caluclations
+     */
+    public static int algorithm2 (String num){
+        int length = num.length();
+        char character;
+        int sum = 0;
+        int digit;
+        String twoDigits = "";
+        
+        for (int i = 1; i < length; i+=2){ // Loop that identifies the even positioned digits
+            character = num.charAt(i);
+            digit = Character.getNumericValue(character); // Converts char (character) to int, sends that value to digit
+            digit *= 2; // Multiplies variable by 2
+
+            if (digit >= 10){ // If the number contains 2 digits (has a tens place and an ones place value)
+                twoDigits = Integer.toString(digit); // Converts int (digit) to string (twoDigits)
+
+                for (int j = 0; j < 2; j++){ // Loop that separates the ones place value and the tens place value, and adds them
+                    character = twoDigits.charAt(j);
+                    digit = Character.getNumericValue(character);
+                    sum += digit;
+                }
+            }
+            else{ // If the number contains 1 digit
+                sum += digit;
+            }
+        }
+
+        return sum; 
+    }
+
+    /*
+     * @author - Carl Wang
+     * Takes the grand sum of sum1 and sum2.
+     * If there is a 0 in the ones palce, method returns true. 
+     * The final part of Luhn's Algorithm
+     * 
+     * @param int grandSum - the sum of part 1 and 2 of Luhn's Algorithm
+     * @return boolean - true if the ones place value contain 0
+     *                   false if ones palce value does not contain 0
+     */
+    public static boolean algorithm3 (int grandSum){
+        String number1 = Integer.toString(grandSum); // Converts int (num) to string (number)
+        int length = number1.length();
+
+        char character = number1.charAt(length-1); // Takes the last character in the string
+        String number2 = Character.toString(character); // Converts char (character) to string (number2)
+
+        if (number2.equals("0")){ 
+            return true; // True returned because ones place contains 0
+        }
+        else{
+            return false; // False returned because ones place does not contain 0 
         }
     }
 }
