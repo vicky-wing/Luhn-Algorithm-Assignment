@@ -181,6 +181,7 @@ class CustomerSystem{
      *                    (user inputted a non-alphabet character).
     */
     public static String checkStringEntry (String input){
+        input = input.replaceAll(" ", ""); // Removes any spaces the string contains, as it only should be one word
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
         String alphabet2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int counter = 0;
