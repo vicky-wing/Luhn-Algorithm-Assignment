@@ -1,3 +1,7 @@
+/*
+    * @author - Vicky Li
+    * Ensures that the postal code 3 or more characters – validation is required
+    */
 public class validatePostalCodeTest{
     public static void main(String[] args){
         Scanner kb = new Scanner (System.in);
