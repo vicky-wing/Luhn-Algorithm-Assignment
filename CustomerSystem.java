@@ -1,7 +1,11 @@
 // Throughout this project, the use of data structures are not permitted such as methods like .split and .toCharArray
 
-
-
+/*
+* Date: 2021.04.07 
+* Name: Carl Wang and Vicky Li
+* Teacher: Mr. Ho
+* Description: A program comissioned by a retail company in Canada
+*/
 
 import java.util.Scanner;
 // More packages may be imported in the space below
